@@ -20,7 +20,7 @@ export default class Signin extends Component {
       responseGoogle (googleUser) {
         var id_token = googleUser.getAuthResponse().id_token;
         var googleId = googleUser.getId();
-        
+        console.log('Login successfully');
         console.log({ googleId });
         console.log({accessToken: id_token});
       }
@@ -35,7 +35,7 @@ export default class Signin extends Component {
                 <h3>Sign In</h3>
               </div>
               <div className="app-name">
-                Google Chat App by Minh Tung - 1512651
+                Google Chat Web by Minh Tung - 1512651
               </div>
               <div className="google-icon">
                 
