@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
-import {BrowserRouter} from 'react-router-dom';
 import Signin from './component/auth/signin';
+import Chatform from './component/chatform';
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
-        <Signin/>
-      </BrowserRouter>
+        <div>
+          <Signin/>  
+          
+        </div>
+        
     );
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { GoogleLogin } from 'react-google-login-component';
+import { GoogleLogin } from 'react-google-login-component/dist/react-google-login-component';
 import firebase from 'firebase';
 import './../../css/bootstrap.css';
 import './../../css/login.css';
@@ -29,7 +29,7 @@ export default class Signin extends Component {
     return (
       <div>
         <div className="container">
-          <div className="d-flex justify-content-center h-100">
+          <div className="d-flex justify-content-center h-100 bord">
             <div className="card">
               <div className="card-header">
                 <h3>Sign In</h3>
@@ -72,9 +72,6 @@ export default class Signin extends Component {
               <div className="card-footer">
                 <div className="d-flex justify-content-center links">
                   Don't have an account?<a href="#">Sign Up</a>
-                </div>
-                <div className="d-flex justify-content-center">
-                  <a href="#">Forgot your password?</a>
                 </div>
               </div>
             </div>
