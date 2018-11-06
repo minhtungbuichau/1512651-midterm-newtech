@@ -1,17 +1,49 @@
-import React, { Component } from 'react';
-import './App.css';
-import Signin from './component/auth/signin';
-import Chatform from './component/chatform';
+import React, {Component} from 'react';
+
+import {firebaseConnect, isLoaded, isEmpty} from 'react-redux-firebase';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import SignOut from "./component/SignOut";
+import Signin from "./component/Signin";
+import  * as action from './action/action';
+import HomePage from "./component/HomePage";
+
 class App extends Component {
-  render() {
-    return (
-        <div>
-          <Signin/>  
-          
-        </div>
-        
-    );
-  }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isSigned: true,
+        };
+    }
+
+
+    render() {
+
+        var {auth} = this.props;
+        console.log(auth);
+        var buttonElm = auth.isEmpty? <Signin/> : <SignOut/>;
+        var homePageElm= auth.isEmpty? '': <HomePage/>;
+        console.log(buttonElm);
+        return (
+            <div>
+                <div className="row">
+                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        {homePageElm}
+                    </div>
+                </div>
+                {buttonElm}
+            </div>
+        );
+    }
 }
 
-export default App;
+
+const mapStateToProps = (state) =>{
+    return{
+        auth: state.firebase.auth,
+    };
+};
+
+
+export default connect(mapStateToProps,null)(App);

@@ -1,29 +1,23 @@
 import React, { Component } from 'react'
-import { GoogleLogin } from 'react-google-login-component/dist/react-google-login-component';
 import firebase from 'firebase';
-import './../../css/bootstrap.css';
-import './../../css/login.css';
-export default class Signin extends Component {
+import { compose } from 'redux';
+import {connect} from 'react-redux';
+import { withFirebase , firebaseConnect } from 'react-redux-firebase';
+import './../css/bootstrap.css';
+import './../css/login.css';
+class Signin extends Component {
     constructor (props, context) {
         super(props, context);
-        var config = {
-            apiKey: "AIzaSyBhSQGF4V7rPdezbjfpMkapAj9W4ZX_zxM",
-            authDomain: "midterm-newtech.firebaseapp.com",
-            databaseURL: "https://midterm-newtech.firebaseio.com",
-            projectId: "midterm-newtech",
-            storageBucket: "midterm-newtech.appspot.com",
-            messagingSenderId: "310198683728"
-          };
-          firebase.initializeApp(config);
       }
      
-      responseGoogle (googleUser) {
-        var id_token = googleUser.getAuthResponse().id_token;
-        var googleId = googleUser.getId();
-        console.log('Login successfully');
-        console.log({ googleId });
-        console.log({accessToken: id_token});
-      }
+      // responseGoogle (googleUser) {
+      //   var id_token = googleUser.getAuthResponse().id_token;
+      //   var googleId = googleUser.getId();
+      //   console.log('Login successfully');
+      //   console.log({ googleId });
+      //   console.log({accessToken: id_token});
+      //   console.log()
+      // }
   
     render() {
     return (
@@ -57,16 +51,9 @@ export default class Signin extends Component {
 
               <div className="card-body justify-content-center">
                 <div className="icon-button justify-content-center">
-                  <GoogleLogin 
-                    onSuccess={this.responseGoogle}
-                    onFailure={this.responseGoogle}
-                    socialId="310198683728-fkbd6auo302gj5rfr9lqufapr16trmut.apps.googleusercontent.com"
-                    className="google-login btn btn-danger"
-                    scope="profile"
-                    fetchBasicProfile={false}
-                    responseHandler={this.responseGoogle}
-                    buttonText="Login With Google"
-                  />
+                  <button className="btn btn-danger" onClick={() => firebase.login({ provider: 'google', type: 'popup' })}> 
+                  Login With Google
+                  </button>
                 </div>
               </div>
               <div className="card-footer">
@@ -81,3 +68,12 @@ export default class Signin extends Component {
     )
   }
 }
+
+const mapStateToProps = (state,ownProps)=>{
+  return{
+      auth: state.firebase.auth,
+  };
+};
+
+export default compose(firebaseConnect(),connect(mapStateToProps,null))(Signin);
+ 
