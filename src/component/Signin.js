@@ -9,16 +9,6 @@ class Signin extends Component {
     constructor (props, context) {
         super(props, context);
       }
-     
-      // responseGoogle (googleUser) {
-      //   var id_token = googleUser.getAuthResponse().id_token;
-      //   var googleId = googleUser.getId();
-      //   console.log('Login successfully');
-      //   console.log({ googleId });
-      //   console.log({accessToken: id_token});
-      //   console.log()
-      // }
-  
     render() {
     return (
       <div>

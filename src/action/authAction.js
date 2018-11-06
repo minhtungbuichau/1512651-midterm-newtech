@@ -1,22 +1,20 @@
 
-import * as Types from './../definition/status';
+import * as Status from './../definition/status';
 export const signIn = () =>{
     return(dispatch, getSate,{getFirebase})=>{
         const firebase = getFirebase();
         firebase.auth().signInWithPopup(firebase.auth().GoogleAuthProvider())
             .then(()=>{
-                dispatch({type: Types.LOGIN_CHAT_APP})
+                dispatch({type: Status.LOGIN})
             })
             .catch((err)=>{
-                dispatch({type: Types.LOGIN_ERROR});
+                dispatch({type: Status.LOGIN_ERROR});
             }); 
-
-
     };
 };
 
 export const signOut = () =>{
     return{
-        type: Types.LOG_OUT_CHAT_APP,
+        type: Status.LOGOUT,
     }
 };

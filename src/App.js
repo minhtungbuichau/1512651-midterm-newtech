@@ -22,17 +22,17 @@ class App extends Component {
 
         var {auth} = this.props;
         console.log(auth);
-        var buttonElm = auth.isEmpty? <Signin/> : <SignOut/>;
-        var homePageElm= auth.isEmpty? '': <HomePage/>;
-        console.log(buttonElm);
+        var buttonMaster = auth.isEmpty? <Signin/> : '';
+        var homePage= auth.isEmpty? '': <HomePage/>;
+        console.log(buttonMaster);
         return (
             <div>
                 <div className="row">
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        {homePageElm}
+                        {homePage}
                     </div>
                 </div>
-                {buttonElm}
+                {buttonMaster}
             </div>
         );
     }

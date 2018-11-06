@@ -1,21 +1,19 @@
 import React,{Component} from 'react';
-import {selectedFrientChating} from './../../action/friendChatingAction'
+import {selectedFriendChating} from './../../action/friendChatingAction'
 import  {connect} from 'react-redux'
 
 class FriendItem extends Component {
 
 
-    onClickItem = (userData)=>{
-        this.props.onSelectedFriendChating(userData);
+    onClick = (userData)=>{
+        this.props.onSelectFriendChating(userData);
     };
     render() {
-
-
         var{userData} = this.props;
         console.log(userData);
         return (
-            <li className="clearfix" onClick={() =>this.onClickItem(userData)}>
-                <img src={userData.avatarUrl} className="friend-avatar" alt="avatar" />
+            <li className="clearfix" onClick={() =>this.onClick(userData)}>
+                <img src={userData.avatarUrl} className="avatar" alt="avatar" />
                 <div className="about">
                     <div className="name">
                         {userData.displayName}
@@ -31,7 +29,7 @@ class FriendItem extends Component {
 
 var mapDispatchToProps =(dispatch)=>{
     return{
-        onSelectedFriendChating: (selectedFriend)=>{dispatch(selectedFrientChating(selectedFriend));}
+        onSelectFriendChating: (selectedFriend)=>{dispatch(selectedFriendChating(selectedFriend));}
     }
 };
 export default connect(null,mapDispatchToProps)(FriendItem);

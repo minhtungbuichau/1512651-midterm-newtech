@@ -1,21 +1,18 @@
 import React,{Component} from 'react';
 import  {connect} from 'react-redux'
-import FriendChatingNav from "./FriendChatingNav";
+import FriendChat from "./FriendChat";
 import MessageItem from "./MessageItem";
 import {compose} from 'redux';
 import ListMessage from "./ListMessage";
-import TypingText from "./TypingText";
+import Text from "./Text";
 
 class ChatTab extends Component{
     render() {
-
         return (
             <div className="chat">
-                <FriendChatingNav/>
+                <FriendChat/>
                 <ListMessage/>
-                <TypingText
-
-                />
+                <Text/>
             </div>
         );
     }
@@ -27,10 +24,6 @@ var mapSateToProps = (state) =>{
         selectedFriendChatting: state.selectedFriendChatting,
     };
 };
-var mapDispatchToProps =(dispatch)=>{
-    return{
 
-    }
-};
-export default connect(mapSateToProps,mapDispatchToProps)(ChatTab);
+export default connect(mapSateToProps)(ChatTab);
 

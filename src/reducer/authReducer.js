@@ -1,16 +1,15 @@
-import * as Types from './../definition/status'
+import * as Status from './../definition/status'
 import {getFirebase} from 'react-redux-firebase'
 import {logout} from "../action/action";
-const initialSatte = {};
-const authReducer = (state = initialSatte, action)=>{
+const initialState = {};
+const authReducer = (state = initialState, action)=>{
     switch (action.type) {
-        case Types.LOGIN_CHAT_APP:
-            console.log('login success');
+        case Status.LOGIN:
             return {...state};
-        case Types.LOGIN_ERROR:
+        case Status.LOGIN_ERROR:
             return {...state,
             authError: 'Login failed'};
-        case Types.LOG_OUT_CHAT_APP:
+        case Status.LOGOUT:
                 const firebase = getFirebase();
                 firebase.auth().signOut();
             return{...state};

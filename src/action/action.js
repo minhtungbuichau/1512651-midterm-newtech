@@ -1,13 +1,13 @@
-import * as Types from '../definition/status';
+import * as Status from '../definition/status';
 
 export const login = () =>{
   return{
-      type: Types.LOGIN_CHAT_APP,
+      type: Status.LOGIN,
   };
 };
 
 export const logout = () =>{
     return{
-        type: Types.LOG_OUT_CHAT_APP,
+        type: Status.LOGOUT,
     };
 };

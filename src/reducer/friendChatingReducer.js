@@ -1,16 +1,14 @@
-import * as Types from '../definition/status';
+import * as Status from '../definition/status';
 
 const initialState = {};
 const friendChatingReducer = (state = initialState, action)=>{
     switch (action.type) {
-        case Types.SELECTED_FRIEND_CHATING:
+        case Status.SELECT_FRIEND_CHAT:
             state = action.selectedFriendChatting;
-            console.log(state);
             return{...state};
         default:
             return state;
     }
-
     return state;
 };
 

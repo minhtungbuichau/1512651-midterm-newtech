@@ -1,14 +1,13 @@
-import * as Types from '../definition/status';
+import * as Status from '../definition/status';
 
-export const selectedFrientChating = (selectedFriend)=>{
+export const selectedFriendChating = (selectedFriend)=>{
   return{
-      type: Types.SELECTED_FRIEND_CHATING,
+      type: Status.SELECT_FRIEND_CHAT,
       selectedFriendChatting: selectedFriend,
   }
 };
-
 export const enteredTextAred = () =>{
   return{
-      type: Types.SENDING_MESSAGE,
+      type: Status.SENDING_MESSAGE,
   }
 };

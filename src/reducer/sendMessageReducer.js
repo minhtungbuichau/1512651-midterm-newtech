@@ -1,8 +1,8 @@
-import * as Types from './../definition/status';
+import * as Status from './../definition/status';
 var initialMessage = false;
 const sendingMessage = (state = initialMessage, action) =>{
     switch (action.type) {
-        case Types.SENDING_MESSAGE:
+        case Status.SENDING_MESSAGE:
             state = !state;
             return {...state};
 

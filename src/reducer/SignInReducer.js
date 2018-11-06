@@ -1,12 +1,12 @@
-import * as Types from './../definition/status'
+import * as Status from './../definition/status'
 var initialState = false;
 var myReducer = (state=initialState, action)=>{
     switch (action.type) {
-        case Types.LOGIN_CHAT_APP:
+        case Status.LOGIN:
             state = true;
             return state;
 
-        case Types.LOG_OUT_CHAT_APP:
+        case Status.LOGOUT:
             state = false;
             return state;
         default:

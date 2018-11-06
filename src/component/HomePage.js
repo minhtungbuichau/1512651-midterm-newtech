@@ -4,19 +4,18 @@ import  {getFirebase} from 'react-redux-firebase';
 import ChatTab from "./rightColumn/ChatTab";
 import {connect} from 'react-redux';
 import ListFriend from "./../component/leftColumn/ListFriend";
-import FriendChatingNav from "./rightColumn/FriendChatingNav";
+import FontAwesome from './../definition/font-awesome';
 class HomePage extends Component {
     render() {
         var {selectedFriendChatting} = this.props;
-        var chatTabElm = selectedFriendChatting.key? <ChatTab/> : '';
+        var chatBox = selectedFriendChatting.key? <ChatTab/> : '';
         return (
             <div>
-                <div>
-                    <div className="container clearfix">
-                        <ListFriend/>
-                        {chatTabElm}
-                    </div>
-                </div>
+                <FontAwesome/>              
+                <div className="container clearfix">
+                    <ListFriend/>
+                    {chatBox}
+                </div>       
             </div>
         )
     }

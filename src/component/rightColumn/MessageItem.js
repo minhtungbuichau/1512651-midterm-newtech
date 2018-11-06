@@ -4,7 +4,6 @@ class MessageItem extends Component {
     render() {
 
         var {message} = this.props;
-        console.log('message'); console.log(message);
         return (<div>
                 <li className="clearfix">
                     <div className={message.type !== 'auth'?   'message-data' : 'message-data align-right'}>

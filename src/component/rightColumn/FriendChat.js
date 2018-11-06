@@ -1,34 +1,29 @@
 import React,{Component} from 'react';
-import  {connect} from 'react-redux'
-
-class FriendChatingNav extends Component{
+import  {connect} from 'react-redux';
+import SignOut from './../SignOut'
+class FriendChat extends Component{
     render() {
-
-
         var {selectedFriendChatting} = this.props;
-
         return (
-                <div className="chat-header clearfix">
+                <div className="chat-header clearfix">                
                     <img
                         src={selectedFriendChatting.avatarUrl}
                         alt="avatar"
-                        className="friend-avatar"
+                        className="avatar"
                     />
                     <div className="chat-about">
                         <div className="chat-with">Chat with  {selectedFriendChatting.displayName}</div>
-    
-                    </div>
-                    <i className="fa fa-star" />
+                    </div> 
+                    <i className="fas fa-star" />
                 </div>
         );
-    }3
+    }
 }
-
 
 const mapStateToProps = (state)=>{
     return{
         selectedFriendChatting: state.selectedFriendChatting,
     }
 };
-export default connect(mapStateToProps,null)(FriendChatingNav);
+export default connect(mapStateToProps,null)(FriendChat);
 
