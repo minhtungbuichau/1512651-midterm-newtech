@@ -1,9 +1,11 @@
 import React,{Component} from 'react';
 import FriendItem from "./FriendItem";
-import {firebaseConnect,getFirebase} from 'react-redux-firebase';
+import {firebaseConnect,getFirebase, isLoaded, isEmpty} from 'react-redux-firebase';
+import Firebase from 'firebase';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 import SignOut from './../SignOut';
+import Search from './Search';
 class ListFriend extends Component {
 
     render() {
@@ -12,25 +14,54 @@ class ListFriend extends Component {
         if (typeof users !== 'undefined' && users !== null){
             var authUid = this.props.firebase.auth().currentUser.uid;
             var userKeys = Object.keys(users);
-            for(var index = 0; index < userKeys.length; index++){
-                if(userKeys[index] !== authUid) {
-                    var user = users[userKeys[index]];
-                    user.key = userKeys[index];
+            console.log(userKeys);
+            var icon = 'online';
+            var text = 'online';
+            for(var i = 0; i < userKeys.length; i++){
+                if(userKeys[i] !== authUid) {
+                    var user = users[userKeys[i]];
+                    user.key = userKeys[i];
+                    
+                    // handle online - offline
+                    var online = users[userKeys[i]].connection;
+                    console.log(online);
+                    if(!online) {
+                        text = 'left ';
+                        icon = 'offline';//font awesome fa-circle-offline
+                        var lastOnline = 0;
+                        if (users[userKeys[i]].lastOnline != null){
+                            lastOnline = parseInt(users[userKeys[i]].lastOnline);
+                            console.log(lastOnline);
+                        } 
+                        var date = new Date(null);
+                        date.setMilliseconds(new Date().getTime() - lastOnline); // specify value for SECONDS here
+                        var timeString = date.toISOString().substr(11, 8);
+                        var timeUnix = timeString.split(':');
+                        if(timeUnix[0].trim() !== "00") {
+                            text += ( parseInt(timeUnix[0].trim()) + "  hours ago " );
+                        } else if(timeUnix[1].trim() !== "00") {
+                            text += ( parseInt(timeUnix[1].trim()) + "  minutes ago " );
+                        } else {
+                            text += ( parseInt(timeUnix[2].trim()) + "  seconds ago " );
+                        }
+                    }
                     userElement.push(
                         <FriendItem
-                            key={userKeys[index]}
+                            key={userKeys[i]}
                             userData={user}
+                            icon={icon} 
+                            text={text}
                         />
                     );
                 }
             }
         }
+       
+
+        
         return (
             <div className="people-list">
-                <div className="search">
-                    <input type="text" placeholder="search" />
-                    <i className="fas fa-search" />
-                </div>
+                <Search/>
                 <ul className="list">
                     {userElement}
                 </ul>

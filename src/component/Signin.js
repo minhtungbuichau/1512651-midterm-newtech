@@ -8,7 +8,33 @@ import './../css/login.css';
 class Signin extends Component {
     constructor (props, context) {
         super(props, context);
+        this.state= {
+          isSignIn: false,
+          uid: '',
+        }
       }
+    
+      componentDidMount() {
+        this.props.firebase.auth().onAuthStateChanged(
+            (user) => {
+                if (user) {
+                    const uid = user.uid;;
+                    var lastOnlineRef = this.props.firebase.database().ref('users/' + uid + '/lastOnline');
+                    var myConnectionsRef = this.props.firebase.database().ref('users/' + uid + '/connection');
+                    var connectedRef = this.props.firebase.database().ref('.info/connected');
+                    connectedRef.on('value', function (snap) {
+                        if (snap.val() === true) {
+                            myConnectionsRef.set(true);
+                            lastOnlineRef.onDisconnect().set(firebase.database.ServerValue.TIMESTAMP);
+                            myConnectionsRef.onDisconnect().set(false);
+                        }
+                    });
+                }
+                this.setState({ isSignedIn: !!user })
+            }
+        );
+    }
+
     render() {
     return (
       <div>
@@ -48,7 +74,7 @@ class Signin extends Component {
               </div>
               <div className="card-footer">
                 <div className="d-flex justify-content-center links">
-                  Don't have an account?<a href="#">Sign Up</a>
+                  Don't have an account?<a href="https://goo.gl/ac9mK2">Sign Up</a>
                 </div>
               </div>
             </div>

@@ -16,5 +16,6 @@ export const signIn = () =>{
 export const signOut = () =>{
     return{
         type: Status.LOGOUT,
+            
     }
 };

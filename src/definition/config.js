@@ -9,4 +9,6 @@ export const config = {
 
 export const rrfConfig = {
     userProfile: 'users', // can be any string path
+    presence: 'presence',
+    sessions: 'sessions'
 }

@@ -14,7 +14,7 @@ class FriendChat extends Component{
                     <div className="chat-about">
                         <div className="chat-with">Chat with  {selectedFriendChatting.displayName}</div>
                     </div> 
-                    <i className="fas fa-star" />
+                    <i className="fas fa-star friend-chat-star" />
                 </div>
         );
     }

@@ -19,7 +19,7 @@ class FriendItem extends Component {
                         {userData.displayName}
                     </div>
                     <div className="status">
-                        <i className="fa fa-circle online" /> online
+                        <i className={"fa fa-circle " + this.props.icon}/> {this.props.text}
                     </div>
                 </div>
             </li>

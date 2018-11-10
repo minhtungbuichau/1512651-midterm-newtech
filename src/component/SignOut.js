@@ -1,9 +1,11 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import {signOut} from  './../action/authAction';
+import Firebase from 'firebase';
+import { withFirebase , firebaseConnect } from 'react-redux-firebase';
 class SignOut  extends Component{
-    render(){
 
+    render(){
         return(
             <div>
                 <button
@@ -20,4 +22,11 @@ var mapDispatchToProps = (dispatch) =>{
         signOut: () =>dispatch(signOut()),
     }
 };
-export default connect(null,mapDispatchToProps)(SignOut);
+
+const mapStateToProps = (state,ownProps)=>{
+    return{
+        auth: state.firebase.auth,
+    };
+  };
+  
+export default connect(mapStateToProps,mapDispatchToProps)(SignOut);

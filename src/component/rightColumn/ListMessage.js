@@ -10,7 +10,6 @@ class ListMessage extends Component {
         var listMessagesItems = [];
         if(selectedFriendChatting.key) {
             listMessagesFirebaseURL = 'users/' + getFirebase().auth().currentUser.uid +'/ListMessages/'+ selectedFriendChatting.key;
-            console.log('url testing');
             console.log(listMessagesFirebaseURL);
             var firebase = getFirebase();
             var ref = firebase.database().ref(listMessagesFirebaseURL).limitToLast(100);
@@ -21,8 +20,6 @@ class ListMessage extends Component {
                         var childData = childSnapshot.val();
                         var message = childData.message;
                         if(typeof  message !== "undefined") {
-                            console.log('message');
-                            console.log(message);
                             if (message.type === 'auth') {
                                 message.senderName = getFirebase().auth().currentUser.displayName;
                             }

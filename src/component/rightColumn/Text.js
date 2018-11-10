@@ -22,7 +22,9 @@ class Text extends Component{
             [name]: value,
         });
     };
-    onSend = (databaseURL,friendDatabaseURL) =>{
+
+    onSendImage = () => {}
+    onSendMessage = (databaseURL,friendDatabaseURL) =>{
         var {content} = this.state;
         getFirebase().database().ref('/persistenceValue/total')
             .once('value').then(function(snapshot) {
@@ -44,26 +46,26 @@ class Text extends Component{
                 type: 'friend',
             });
         });
+       
+       
     };
     render() {
         var {selectedFriendChatting} = this.props;
         var listMessagesFirebaseURL = '';
         var listMessagesFirebaseURLForFriend= '';
         if(selectedFriendChatting.key) {
-            listMessagesFirebaseURL          = 'users/' + getFirebase().auth().currentUser.uid + '/ListMessages/' + selectedFriendChatting.key;
+            listMessagesFirebaseURL = 'users/' + getFirebase().auth().currentUser.uid + '/ListMessages/' + selectedFriendChatting.key;
             listMessagesFirebaseURLForFriend = 'users/' + selectedFriendChatting.key + '/ListMessages/' + getFirebase().auth().currentUser.uid ;
         }
         return (
             <div className="chat-message clearfix">
                 <textarea name="content" id="message-to-send" placeholder="Type your message" rows={3} defaultValue={""} onChange={this.onChange} />
-                <i className="fas fa-file-o" />
-                <i className="fas fa-file-image-o" />
-                <button onClick={() =>this.onSend(listMessagesFirebaseURL,listMessagesFirebaseURLForFriend)}>Send</button>
+                <i className="far fa-images send-image-icon" onClick={()=>this.onSendImage()} />
+                <button onClick={() =>this.onSendMessage(listMessagesFirebaseURL,listMessagesFirebaseURLForFriend)}>Send</button>
             </div>
         );
     }
 }
-
 const getCurrentTime = ()=>{
     return (new Date()).toLocaleString();
 };

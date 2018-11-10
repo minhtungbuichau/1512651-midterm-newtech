@@ -10,7 +10,7 @@ class MessageItem extends Component {
                         <span className="message-data-time">{message.time}</span> &nbsp; &nbsp;
                         <span className="message-data-name">{message.senderName}</span> <i className="fa fa-circle me"/>
                     </div>
-                    <div className={message.type !=='auth'? 'message my-message' : 'message other-message float-right'}>
+                    <div className= {message.type !=='auth'? 'message my-message' : 'message other-message float-right'}>
                         {message.content}
                     </div>
                 </li>
