@@ -1,0 +1,11 @@
+.image-message{
+    border-radius: 7px;
+    justify-content: center;
+    width: 100px;
+}
+
+.image-sent{
+    border-radius: 7px;
+    max-width: 300px;
+    max-height: 200px;
+}

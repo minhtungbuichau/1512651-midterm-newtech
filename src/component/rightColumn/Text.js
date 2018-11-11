@@ -11,10 +11,12 @@ class Text extends Component{
     constructor(props) {
         super(props);
         this.state = {
+            selectedImage: null,
+            messageToSend: '',
             content: '',
         }
     }
-    onChange = (event) =>{
+    onChange = (event) =>{//
         var target = event.target;
         var name = target.name;
         var value = target.value;
@@ -23,31 +25,88 @@ class Text extends Component{
         });
     };
 
-    onSendImage = () => {}
+    
     onSendMessage = (databaseURL,friendDatabaseURL) =>{
         var {content} = this.state;
+        var ownImage = this;
+        if(this.state.selectedImage != null){
+            const {selectedImage} = this.state;
+            var storageRef = getFirebase().storage().ref('message').child('images').child(selectedImage.name);
+            storageRef.put(selectedImage).then(function(snapshot){
+                storageRef.getDownloadURL().then(url => {
+                    getFirebase().database().ref('/persistenceValue/total')
+                    .once('value').then(function(snapshot) {
+                       var total = snapshot.val();
+                    getFirebase().database().ref('/persistenceValue').update({
+                        total: total + 1,
+                    });
+                    getFirebase().database().ref(databaseURL+'/' + generateID() + '/message').set({
+                        index: total + 1,
+                        content:content,
+                        time: getCurrentTime(),
+                        imageurl: url,
+                        type: 'auth'
+                    });
+        
+                    getFirebase().database().ref(friendDatabaseURL+'/' + generateID() + '/message').set({
+                        index: total + 1,
+                        content:content,
+                        time: getCurrentTime(),
+                        imageurl: url,
+                        type: 'friend'
+                    });
+                });
+
+                ownImage.setState({
+                    content: '',
+                    selectedImage: null,
+                });
+            });
+        })
+    }
+    else{
         getFirebase().database().ref('/persistenceValue/total')
             .once('value').then(function(snapshot) {
-               var total = snapshot.val();
+            console.log('snapshot'); console.log(snapshot.val());
+            var total = snapshot.val();
             getFirebase().database().ref('/persistenceValue').update({
                 total: total + 1,
             });
+
             getFirebase().database().ref(databaseURL+'/' + generateID() + '/message').set({
                 index: total + 1,
                 content:content,
                 time: getCurrentTime(),
-                type: 'auth',
+                imageurl: null,
+                type: 'auth'
+
             });
 
             getFirebase().database().ref(friendDatabaseURL+'/' + generateID() + '/message').set({
                 index: total + 1,
                 content:content,
                 time: getCurrentTime(),
-                type: 'friend',
+                imageurl: null,
+                type: 'friend'
             });
+
+            ownImage.setState({
+                content: '',
+                selectedImage: null,
+            });
+
         });
-       
-       
+    }
+
+
+    };
+    onSendImageButton = () => { this.refs.fileUpload.click();}// uploadimagecliker
+    onImageUpload = (event) =>{//imageuploadchange
+        var file = event.target.files[0];
+        this.setState({
+            selectedImage: file,
+        })
+        console.log("uploaded");
     };
     render() {
         var {selectedFriendChatting} = this.props;
@@ -57,11 +116,17 @@ class Text extends Component{
             listMessagesFirebaseURL = 'users/' + getFirebase().auth().currentUser.uid + '/ListMessages/' + selectedFriendChatting.key;
             listMessagesFirebaseURLForFriend = 'users/' + selectedFriendChatting.key + '/ListMessages/' + getFirebase().auth().currentUser.uid ;
         }
+        const {selectedImage} = this.state;
+        var imgSent = selectedImage? <img src={URL.createObjectURL(selectedImage) } className="image-sent" alt="imageSend"/>: '';
         return (
             <div className="chat-message clearfix">
-                <textarea name="content" id="message-to-send" placeholder="Type your message" rows={3} defaultValue={""} onChange={this.onChange} />
-                <i className="far fa-images send-image-icon" onClick={()=>this.onSendImage()} />
+                <textarea name="content" id="message-to-send" placeholder="Type your message" rows={3} onChange={this.onChange} value={this.state.content} />
+                {imgSent}
+                <input type="file" id="file" ref="fileUpload" style={{display: "none"}} onChange={this.onImageUpload}/>
+    
+                <i className="far fa-images send-image-icon" onClick={this.onSendImageButton} />
                 <button onClick={() =>this.onSendMessage(listMessagesFirebaseURL,listMessagesFirebaseURLForFriend)}>Send</button>
+                
             </div>
         );
     }
@@ -72,6 +137,7 @@ const getCurrentTime = ()=>{
 const mapStateToProps = (state)=>{
     return{
         selectedFriendChatting: state.selectedFriendChatting,
+        firebase: state.firebase
     }
 };
 export default connect(mapStateToProps)(Text);

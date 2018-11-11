@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import FriendItem from "./FriendItem";
-import {firebaseConnect,getFirebase, isLoaded, isEmpty} from 'react-redux-firebase';
+import {firebaseConnect,getFirebase} from 'react-redux-firebase';
 import Firebase from 'firebase';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
@@ -38,11 +38,11 @@ class ListFriend extends Component {
                         var timeString = date.toISOString().substr(11, 8);
                         var timeUnix = timeString.split(':');
                         if(timeUnix[0].trim() !== "00") {
-                            text += ( parseInt(timeUnix[0].trim()) + "  hours ago " );
+                            text += ( parseInt(timeUnix[0].trim()) + "  hours ago");
                         } else if(timeUnix[1].trim() !== "00") {
-                            text += ( parseInt(timeUnix[1].trim()) + "  minutes ago " );
+                            text += ( parseInt(timeUnix[1].trim()) + "  minutes ago");
                         } else {
-                            text += ( parseInt(timeUnix[2].trim()) + "  seconds ago " );
+                            text += ( parseInt(timeUnix[2].trim()) + "  seconds ago");
                         }
                     }
                     userElement.push(
@@ -55,10 +55,7 @@ class ListFriend extends Component {
                     );
                 }
             }
-        }
-       
-
-        
+        }      
         return (
             <div className="people-list">
                 <Search/>
