@@ -11,3 +11,4 @@ export const enteredTextAred = () =>{
       type: Status.SENDING_MESSAGE,
   }
 };
+

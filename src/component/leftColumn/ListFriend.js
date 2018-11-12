@@ -1,27 +1,34 @@
 import React,{Component} from 'react';
 import FriendItem from "./FriendItem";
-import {firebaseConnect,getFirebase} from 'react-redux-firebase';
+import {firebaseConnect,getFirebase,getVal} from 'react-redux-firebase';
 import Firebase from 'firebase';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 import SignOut from './../SignOut';
 import Search from './Search';
+import friendChatingReducer from '../../reducer/friendChatingReducer';
 class ListFriend extends Component {
 
+    constructor(props) {
+        super(props);
+        
+    }
+    
     render() {
-        var {users} = this.props;
+        var {users,starState,isStarFriend} = this.props;
         var userElement = [];
         if (typeof users !== 'undefined' && users !== null){
             var authUid = this.props.firebase.auth().currentUser.uid;
             var userKeys = Object.keys(users);
-            console.log(userKeys);
             var icon = 'online';
             var text = 'online';
             for(var i = 0; i < userKeys.length; i++){
                 if(userKeys[i] !== authUid) {
                     var user = users[userKeys[i]];
                     user.key = userKeys[i];
-                    
+                    if (starState != null && typeof starState!=="undefined" && typeof starState[userKeys[i]]!=="undefined"){
+                        user.isStarFriend = starState[userKeys[i].isStarFriend];
+                    }
                     // handle online - offline
                     var online = users[userKeys[i]].connection;
                     console.log(online);
@@ -51,10 +58,15 @@ class ListFriend extends Component {
                             userData={user}
                             icon={icon} 
                             text={text}
+                            starState = {starState}
                         />
                     );
                 }
             }
+            userElement.sort((friendA,friendB) => {
+                if(friendA.isStarFriend && !friendB.isStarFriend) return -1;
+                return 1;
+            })
         }      
         return (
             <div className="people-list">
@@ -72,9 +84,12 @@ class ListFriend extends Component {
 var mapStateToProps = (state) =>{
   return{
       users: state.firebase.data.users,
+      isStarFriend: state.isStarFriend,
+      starState: getVal(state.firebase.data, 'starState/' + getFirebase().auth().currentUser.uid)
   };
 };
-export default compose(firebaseConnect([
+export default compose(firebaseConnect((props) => [
     'users',
+    'starState/' + getFirebase().auth().currentUser.uid,
 ]),connect(mapStateToProps,null))(ListFriend);
 
