@@ -3,7 +3,7 @@ import  {connect} from 'react-redux';
 import {getFirebase} from "react-redux-firebase";
 import SignOut from './../SignOut';
 import './../../css/chatform.css';
-import  {setStarPeople} from './../../action/starAction';//onChangeFriendtarState
+import  {setStarPeople} from './../../action/starAction';
 class FriendChat extends Component{
     constructor(props) {
         super(props);
@@ -12,7 +12,7 @@ class FriendChat extends Component{
 
     clickStar = () => {
         const {selectedFriendChatting} = this.props;
-        getFirebase().ref("starState").child(getFirebase().auth().currentUser.uid).child(selectedFriendChatting.key).update({
+        getFirebase().ref("star").child(getFirebase().auth().currentUser.uid).child(selectedFriendChatting.key).update({
         isStarFriend: !selectedFriendChatting.isStarFriend
         });
         this.props.setStarPeople();

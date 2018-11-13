@@ -36,5 +36,5 @@ var mapDispatchToProps =(dispatch)=>{
         onSelectFriendChating: (selectedFriend)=>{dispatch(selectedFriendChating(selectedFriend));}
     }
 };
-export default compose(firebaseConnect(props =>[{path: 'starState'}]) , connect(null,mapDispatchToProps))(FriendItem);
+export default compose(firebaseConnect(props =>[{path: 'star'}]) , connect(null,mapDispatchToProps))(FriendItem);
 

@@ -15,7 +15,7 @@ class ListFriend extends Component {
     }
     
     render() {
-        var {users,starState,isStarFriend} = this.props;
+        var {users,star,isStarFriend} = this.props;
         var userElement = [];
         if (typeof users !== 'undefined' && users !== null){
             var authUid = this.props.firebase.auth().currentUser.uid;
@@ -26,8 +26,8 @@ class ListFriend extends Component {
                 if(userKeys[i] !== authUid) {
                     var user = users[userKeys[i]];
                     user.key = userKeys[i];
-                    if (starState != null && typeof starState!=="undefined" && typeof starState[userKeys[i]]!=="undefined"){
-                        user.isStarFriend = starState[userKeys[i].isStarFriend];
+                    if (star != null && typeof star!=="undefined" && typeof star[userKeys[i]]!=="undefined"){
+                        user.isStarFriend = star[userKeys[i].isStarFriend];
                     }
                     // handle online - offline
                     var online = users[userKeys[i]].connection;
@@ -58,7 +58,7 @@ class ListFriend extends Component {
                             userData={user}
                             icon={icon} 
                             text={text}
-                            starState = {starState}
+                            star = {star}
                         />
                     );
                 }
@@ -85,11 +85,11 @@ var mapStateToProps = (state) =>{
   return{
       users: state.firebase.data.users,
       isStarFriend: state.isStarFriend,
-      starState: getVal(state.firebase.data, 'starState/' + getFirebase().auth().currentUser.uid)
+      star: getVal(state.firebase.data, 'star/' + getFirebase().auth().currentUser.uid)
   };
 };
 export default compose(firebaseConnect((props) => [
     'users',
-    'starState/' + getFirebase().auth().currentUser.uid,
+    'star/' + getFirebase().auth().currentUser.uid,
 ]),connect(mapStateToProps,null))(ListFriend);
 
