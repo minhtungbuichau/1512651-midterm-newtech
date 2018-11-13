@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import  {connect} from 'react-redux';
-<<<<<<< HEAD
 import {getFirebase} from "react-redux-firebase";
 import SignOut from './../SignOut';
 import './../../css/chatform.css';
@@ -18,12 +17,9 @@ class FriendChat extends Component{
         });
         this.props.setStarPeople();
     }
-=======
-import SignOut from './../SignOut'
-class FriendChat extends Component{
->>>>>>> parent of 93ed086... ok get image link
     render() {
-        var {selectedFriendChatting} = this.props;
+        
+        const {selectedFriendChatting} = this.props;
         return (
                 <div className="chat-header clearfix">                
                     <img
@@ -34,9 +30,16 @@ class FriendChat extends Component{
                     <div className="chat-about">
                         <div className="chat-with">Chat with  {selectedFriendChatting.displayName}</div>
                     </div> 
-                    <i className="fas fa-star friend-chat-star" />
+                    <i className={selectedFriendChatting.isStarFriend ? "fas fa-star star-button" : "fas fa-star" } onClick = {this.clickStar}/>
                 </div>
         );
+    }
+}
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        setStarPeople: () => {
+            dispatch(setStarPeople());
+        }
     }
 }
 
@@ -45,5 +48,4 @@ const mapStateToProps = (state)=>{
         selectedFriendChatting: state.selectedFriendChatting,
     }
 };
-export default connect(mapStateToProps,null)(FriendChat);
-
+export default connect(mapStateToProps,mapDispatchToProps)(FriendChat);

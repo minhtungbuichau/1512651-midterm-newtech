@@ -18,7 +18,7 @@ class Signin extends Component {
         this.props.firebase.auth().onAuthStateChanged(
             (user) => {
                 if (user) {
-                    const uid = user.uid;
+                    const uid = user.uid;;
                     var lastOnlineRef = this.props.firebase.database().ref('users/' + uid + '/lastOnline');
                     var myConnectionsRef = this.props.firebase.database().ref('users/' + uid + '/connection');
                     var connectedRef = this.props.firebase.database().ref('.info/connected');
