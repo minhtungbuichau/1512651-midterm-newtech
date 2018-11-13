@@ -1,8 +1,6 @@
 import React,{Component} from 'react';
-import {selectedFriendChating} from './../../action/friendChatingAction';
-import  {connect} from 'react-redux';
-import {compose} from 'redux';
-import {firebaseConnect} from 'react-redux-firebase';
+import {selectedFriendChating} from './../../action/friendChatingAction'
+import  {connect} from 'react-redux'
 
 class FriendItem extends Component {
 
@@ -13,8 +11,6 @@ class FriendItem extends Component {
     render() {
         var{userData} = this.props;
         console.log(userData);
-
-        
         return (
             <li className="clearfix" onClick={() =>this.onClick(userData)}>
                 <img src={userData.avatarUrl} className="avatar" alt="avatar" />
@@ -36,5 +32,9 @@ var mapDispatchToProps =(dispatch)=>{
         onSelectFriendChating: (selectedFriend)=>{dispatch(selectedFriendChating(selectedFriend));}
     }
 };
+<<<<<<< HEAD
 export default compose(firebaseConnect(props =>[{path: 'star'}]) , connect(null,mapDispatchToProps))(FriendItem);
+=======
+export default connect(null,mapDispatchToProps)(FriendItem);
+>>>>>>> parent of 93ed086... ok get image link
 

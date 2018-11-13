@@ -6,7 +6,7 @@ import isSigned from './signInReducer'
 import authReducer from './authReducer';
 import selectedFriendChatting from './friendChatingReducer'
 import sendingMessage from './sendMessageReducer';
-import isStarFriend from './starReducer';
+
 if (!firebase.apps.length) {
     firebase.initializeApp(Config.config);
 }
@@ -22,5 +22,6 @@ export const rootReducer = combineReducers({
     isSigned: isSigned,
     selectedFriendChatting: selectedFriendChatting,
     sendingMessage : sendingMessage,
-    isStarFriend: isStarFriend
+
+    // firestore: firestoreReducer // <- needed if using firestore
 });

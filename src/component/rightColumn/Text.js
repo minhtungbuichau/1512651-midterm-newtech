@@ -16,24 +16,10 @@ class Text extends Component{
             content: '',
         }
     }
-    validURL(str) {//get from internet
-        var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-        if(!regex .test(str)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
     onChange = (event) =>{//
         var target = event.target;
         var name = target.name;
         var value = target.value;
-        if(this.validURL(value)){
-            this.setState({
-                imageurl: value,
-            });
-        }
-        
         this.setState({
             [name]: value,
         });
@@ -41,7 +27,7 @@ class Text extends Component{
 
     
     onSendMessage = (databaseURL,friendDatabaseURL) =>{
-        var {content,imageurl} = this.state;
+        var {content} = this.state;
         var ownImage = this;
         if(this.state.selectedImage != null){
             const {selectedImage} = this.state;
@@ -91,7 +77,7 @@ class Text extends Component{
                 index: total + 1,
                 content:content,
                 time: getCurrentTime(),
-                imageurl: imageurl,
+                imageurl: null,
                 type: 'auth'
 
             });
@@ -100,7 +86,7 @@ class Text extends Component{
                 index: total + 1,
                 content:content,
                 time: getCurrentTime(),
-                imageurl: imageurl,
+                imageurl: null,
                 type: 'friend'
             });
 
@@ -134,7 +120,7 @@ class Text extends Component{
         var imgSent = selectedImage? <img src={URL.createObjectURL(selectedImage) } className="image-sent" alt="imageSend"/>: '';
         return (
             <div className="chat-message clearfix">
-                <textarea required name="content" id="message-to-send" placeholder="Type your message" rows={3} onChange={this.onChange} value={this.state.content} />
+                <textarea name="content" id="message-to-send" placeholder="Type your message" rows={3} onChange={this.onChange} value={this.state.content} />
                 {imgSent}
                 <input type="file" id="file" ref="fileUpload" style={{display: "none"}} onChange={this.onImageUpload}/>
     
