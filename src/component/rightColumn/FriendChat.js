@@ -12,9 +12,12 @@ class FriendChat extends Component{
 
     clickStar = () => {
         const {selectedFriendChatting} = this.props;
+        console.log(selectedFriendChatting);
         getFirebase().ref("star").child(getFirebase().auth().currentUser.uid).child(selectedFriendChatting.key).update({
         isStarFriend: !selectedFriendChatting.isStarFriend
         });
+        
+        console.log("chick xong");
         this.props.setStarPeople();
     }
     render() {

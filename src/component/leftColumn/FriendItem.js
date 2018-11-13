@@ -12,9 +12,7 @@ class FriendItem extends Component {
     };
     render() {
         var{userData} = this.props;
-        console.log(userData);
-
-        
+        console.log(userData);        
         return (
             <li className="clearfix" onClick={() =>this.onClick(userData)}>
                 <img src={userData.avatarUrl} className="avatar" alt="avatar" />

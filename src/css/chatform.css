@@ -211,5 +211,7 @@
 ul {
 	list-style-type: none;
 }
-
+.star-button{
+	color: yellow !important;
+}
 
